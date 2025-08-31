@@ -1,0 +1,47 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+.env
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Models and large files (optional but recommended)
+models/
+*.pth
+*.bin
+*.h5
+*.zip
+*.tar.gz
+
+# Audio files
+*.wav
+*.mp3
+*.webm

@@ -1,0 +1,61 @@
+/* frontend/src/App.css */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: #666;
+  margin-top: 0;
+}
+
+.status {
+  margin: 20px 0;
+  color: #555;
+  font-style: italic;
+  min-height: 1.5rem;
+}
+
+.mic-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 20px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mic-button.recording {
+  background-color: #f44336; /* Red */
+  animation: pulse 1.5s infinite;
+}
+
+.mic-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
