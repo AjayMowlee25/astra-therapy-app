@@ -2,8 +2,12 @@
 
 import ollama
 import logging
+import os
 
 logger = logging.getLogger(__name__)
+
+# Use Docker service name for Ollama
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama:11434")
 
 # System prompt for the therapy assistant
 THERAPY_SYSTEM_PROMPT = """You are Astra, a compassionate, empathetic, and mindful listener. 
@@ -21,15 +25,11 @@ Respond as if you are in a real-time conversation."""
 def get_ai_response(user_message: str, conversation_history: list = None) -> str:
     """
     Get response from local Ollama model.
-    
-    Args:
-        user_message: The user's input message
-        conversation_history: Previous messages for context (optional)
-    
-    Returns:
-        AI response as string
     """
     try:
+        # Configure Ollama client to use Docker service
+        client = ollama.Client(host=OLLAMA_HOST)
+        
         # Build the messages array
         messages = []
         
@@ -46,12 +46,12 @@ def get_ai_response(user_message: str, conversation_history: list = None) -> str
         logger.info("Sending request to local Ollama model...")
         
         # Get response from Ollama
-        response = ollama.chat(
-            model="phi3",  # Change to your model name if different
+        response = client.chat(
+            model="phi3",
             messages=messages,
             options={
-                "temperature": 0.7,  # Controls creativity (0.0-1.0)
-                "num_predict": 150,   # Max tokens to generate
+                "temperature": 0.7,
+                "num_predict": 150,
             }
         )
         

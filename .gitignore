@@ -1,0 +1,26 @@
+# Docker
+docker-compose.override.yml
+docker-compose.*.yml
+**/docker-data/
+docker.log
+network/
+containers/
+
+# Global OS files
+.DS_Store
+Thumbs.db
+
+# Local development
+.local/
+.devcontainer/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Logs
+*.log
+
+# Any model directories
+models/

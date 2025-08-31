@@ -1,5 +1,3 @@
-# .gitignore
-
 # Python
 __pycache__/
 *.pyc
@@ -7,41 +5,57 @@ __pycache__/
 *.pyd
 .python-version
 .env
+.env.*
 venv/
 .venv/
 env/
 *.egg-info/
 dist/
 build/
-
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.egg/
+.eggs/
+.pytest_cache/
+.mypy_cache/
 
 # Docker
 .docker/
+docker-data/
+.dockerignore
+docker.log
 
-# OS
-.DS_Store
-Thumbs.db
+# Models and AI files
+models/
+*.pth
+*.bin
+*.h5
+*.onnx
+*.pt
+*.safetensors
+
+# Audio files
+*.wav
+*.mp3
+*.webm
+*.ogg
+*.flac
+
+# Logs
+*.log
+logs/
+log/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
-# Models and large files (optional but recommended)
-models/
-*.pth
-*.bin
-*.h5
-*.zip
-*.tar.gz
+# OS
+.DS_Store
+Thumbs.db
 
-# Audio files
-*.wav
-*.mp3
-*.webm
+# Temporary files
+*.tmp
+*.temp
+.cache/

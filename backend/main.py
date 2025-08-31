@@ -1,14 +1,11 @@
 from utils.audio_processor import transcribe_audio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-# import openai  # <-- REMOVE THIS LINE
-# import google.generativeai as genai # <-- ADD THIS IMPORT
 import json
 import asyncio
 import base64
 from dotenv import load_dotenv
 import os
-# from utils.tts_generator import text_to_speech
 from utils.high_quality_tts import text_to_speech_high_quality as text_to_speech
 from utils.local_ai import get_ai_response
 
@@ -19,9 +16,13 @@ load_dotenv()
 app = FastAPI(title="Astra Therapy API", version="0.1.0")
 
 # Configure CORS (Cross-Origin Resource Sharing)
+# Allow all origins for Docker deployment
 origins = [
     "http://localhost:3000",
-    "http://localhost:5173",
+    "http://localhost:5173", 
+    "http://frontend:5173",  # Docker service name
+    "http://localhost:8000",
+    "http://backend:8000",   # Docker service name
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -30,11 +31,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# --- NEW GEMINI CODE ---
-# Configure the Gemini client with your API key from the .env file
-# genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-# --- END NEW GEMINI CODE ---
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -95,13 +91,17 @@ async def websocket_endpoint(websocket: WebSocket):
         print(f"An error occurred: {e}")
         await websocket.send_text(f"ERROR: {str(e)}")
 
+# Health check endpoint for Docker
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "astra-backend"}
+
 # Keep the root endpoint for testing
 @app.get("/")
 async def root():
-    return {"message": "Hello from Astra Therapy Backend! Gemini edition."}
+    return {"message": "Hello from Astra Therapy Backend! Local AI edition."}
 
 # The main function to run the server using Uvicorn.
-# This block is crucial. It tells Python to run the server when the script is executed directly.
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
