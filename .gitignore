@@ -1,26 +1,157 @@
+# Environment files
+.env
+.env.*
+!.env.example
+.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+.egg/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+
+# Node.js
+node_modules/
+.npm
+.node_repl_history
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
 # Docker
+.docker/
 docker-compose.override.yml
 docker-compose.*.yml
 **/docker-data/
 docker.log
+*.dockerignore
 network/
 containers/
 
-# Global OS files
+# Render specific
+.render/
+
+# Build outputs
+dist/
+build/
+.parcel-cache/
+.cache/
+.next/
+out/
+
+# Models and AI files
+models/
+*.pth
+*.bin
+*.h5
+*.onnx
+*.pt
+*.safetensors
+
+# Audio files
+*.wav
+*.mp3
+*.webm
+*.ogg
+*.flac
+
+# Logs
+*.log
+logs/
+log/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
 .DS_Store
 Thumbs.db
-
-# Local development
-.local/
-.devcontainer/
 
 # Temporary files
 *.tmp
 *.temp
 .tmp/
 
-# Logs
-*.log
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output
 
-# Any model directories
-models/
+# Dependencies
+jspm_packages/
+.pnpm/
+.yarn/
+.yarn-integrity
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+out
+
+# nuxt.js build output
+.nuxt
+dist
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Local development
+.local/
+.devcontainer/

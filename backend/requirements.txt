@@ -5,5 +5,5 @@ python-dotenv==1.0.0
 faster-whisper==0.10.0
 TTS==0.22.0
 soundfile==0.12.1
-ollama==0.1.6
+groq==0.3.0  # ← CHANGED to stable version
 requests==2.31.0

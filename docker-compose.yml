@@ -1,12 +1,4 @@
 services:
-  ollama:
-    image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: unless-stopped
-
   backend:
     build: 
       context: ./backend
@@ -14,13 +6,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - OLLAMA_HOST=ollama:11434
+      - GROQ_API_KEY=${GROQ_API_KEY}
       - PYTHONUNBUFFERED=1
-    depends_on:
-      - ollama  # ← Simple dependency without health condition
     volumes:
       - ./models:/app/models
-    restart: unless-stopped
+    restart: unless-stopped  # ← FIX: hyphen, not underscore
 
   frontend:
     build:
@@ -31,8 +21,7 @@ services:
     environment:
       - VITE_WS_URL=ws://localhost:8000/ws
     depends_on:
-      - backend  # ← This can stay simple too
-    restart: unless-stopped
+      - backend
+    restart: unless-stopped  # ← FIX: hyphen, not underscore
 
-volumes:
-  ollama_data:
+# Remove the version line at the top if present

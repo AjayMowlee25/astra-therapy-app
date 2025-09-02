@@ -6,8 +6,8 @@ import asyncio
 import base64
 from dotenv import load_dotenv
 import os
-from utils.high_quality_tts import text_to_speech_high_quality as text_to_speech
-from utils.local_ai import get_ai_response
+from utils.free_tts import text_to_speech
+from utils.groq_ai import get_ai_response
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,10 +19,9 @@ app = FastAPI(title="Astra Therapy API", version="0.1.0")
 # Allow all origins for Docker deployment
 origins = [
     "http://localhost:3000",
-    "http://localhost:5173", 
-    "http://frontend:5173",  # Docker service name
-    "http://localhost:8000",
-    "http://backend:8000",   # Docker service name
+    "http://localhost:5173",
+    "https://astra-frontend.onrender.com",  # ← ADD THIS
+    "https://astra-backend.onrender.com",   # ← ADD THIS
 ]
 app.add_middleware(
     CORSMiddleware,

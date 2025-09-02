@@ -1,4 +1,4 @@
-# Python
+# Python specific
 __pycache__/
 *.pyc
 *.pyo
@@ -12,50 +12,21 @@ env/
 *.egg-info/
 dist/
 build/
-.egg/
-.eggs/
 .pytest_cache/
 .mypy_cache/
 
-# Docker
-.docker/
-docker-data/
-.dockerignore
-docker.log
-
-# Models and AI files
+# Models
 models/
 *.pth
 *.bin
 *.h5
 *.onnx
 *.pt
-*.safetensors
-
-# Audio files
-*.wav
-*.mp3
-*.webm
-*.ogg
-*.flac
 
 # Logs
 *.log
 logs/
-log/
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-*.sublime-*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Temporary files
-*.tmp
-*.temp
-.cache/

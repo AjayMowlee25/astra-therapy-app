@@ -1,0 +1,24 @@
+# render.yaml
+services:
+  - type: web
+    name: astra-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GROQ_API_KEY
+        value: your_groq_api_key_here
+
+  - type: web
+    name: astra-frontend
+    rootDir: frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_WS_URL
+        value: wss://astra-backend.onrender.com/ws
