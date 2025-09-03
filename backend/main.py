@@ -1,4 +1,4 @@
-from utils.cloud_stt import transcribe_audio
+from utils.cloud_stt import speech_to_text
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -46,7 +46,7 @@ async def websocket_endpoint(websocket: WebSocket):
             print(f"Received audio data, length: {len(data)} bytes")
 
             # 2. Transcribe the audio
-            user_text = transcribe_audio(data)
+            user_text = speech_to_text(data)
 
             # 3. CHECK FOR CRISIS KEYWORDS (keep this important safety check)
             crisis_keywords = ['kill myself', 'want to die', 'end it all', 'suicide']
