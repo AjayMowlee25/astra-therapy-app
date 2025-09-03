@@ -31,6 +31,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def add_forwarded_for_header(request, call_next):
+    # This is crucial for WebSockets on Render to get the correct client IP
+    if "x-forwarded-for" in request.headers:
+        # If behind a proxy, use the original host for URL generation
+        request.scope["headers"].append((
+            b"x-forwarded-for",
+            request.headers["x-forwarded-for"].encode()
+        ))
+    response = await call_next(request)
+    return response
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -100,7 +112,7 @@ async def health_check():
 async def root():
     return {"message": "Hello from Astra Therapy Backend! Local AI edition."}
 
-# The main function to run the server using Uvicorn.
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# # The main function to run the server using Uvicorn.
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
