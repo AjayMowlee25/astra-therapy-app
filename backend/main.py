@@ -6,7 +6,7 @@ import asyncio
 import base64
 from dotenv import load_dotenv
 import os
-from utils.free_tts import text_to_speech
+from utils.cloud_tts import text_to_speech
 from utils.groq_ai import get_ai_response
 
 # Load environment variables from .env file
