@@ -5,5 +5,5 @@ python-dotenv==1.0.0
 # faster-whisper==0.10.0
 elevenlabs==0.2.21
 # soundfile==0.12.1
-groq==0.3.0  # ← CHANGED to stable version
+groq==0.18.0  # ← CHANGED to stable version
 requests==2.31.0

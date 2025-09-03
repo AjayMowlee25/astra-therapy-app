@@ -2,12 +2,15 @@
 import os
 import tempfile
 import logging
-from groq import Groq
+import groq
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
+load_dotenv()
+
 # Initialize the Groq client
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = groq.Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def speech_to_text(audio_bytes: bytes) -> str:
     """
