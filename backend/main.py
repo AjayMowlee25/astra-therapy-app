@@ -166,6 +166,28 @@ try:
             "message": "Check Render environment variables"
         }
 
+    @app.get("/test-apis")
+    async def test_apis():
+        """Test if the external APIs are actually working"""
+        try:
+            # Test Groq API
+            from utils.groq_ai import get_ai_response
+            groq_test = get_ai_response("Hello, are you working?", [])
+            
+            # Test ElevenLabs TTS
+            from utils.cloud_tts import text_to_speech  
+            tts_test = text_to_speech("Test message")
+            
+            return {
+                "groq_working": bool(groq_test),
+                "tts_working": bool(tts_test),
+                "groq_response": groq_test[:100] + "..." if groq_test else None,
+                "tts_bytes": len(tts_test) if tts_test else 0
+            }
+            
+        except Exception as e:
+            return {"error": str(e), "traceback": traceback.format_exc()}
+
     @app.get("/")
     async def root():
         return {"message": "Hello from Astra Therapy Backend! Local AI edition."}
