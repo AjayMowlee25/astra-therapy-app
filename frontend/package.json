@@ -4,5 +4,8 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "render-build": "npm run build"
+  },
+  "devDependencies": {
+    "vite": "^7.1.4"
   }
 }
