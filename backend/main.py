@@ -20,8 +20,8 @@ app = FastAPI(title="Astra Therapy API", version="0.1.0")
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://astra-frontend.onrender.com",  # ← ADD THIS
-    "https://astra-backend.onrender.com",   # ← ADD THIS
+    "https://astra-frontend-ka2s.onrender.com",  # ← ADD THIS
+    "https://astra-backend-4phc.onrender.com",   # ← ADD THIS
 ]
 app.add_middleware(
     CORSMiddleware,
