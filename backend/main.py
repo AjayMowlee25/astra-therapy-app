@@ -1,4 +1,4 @@
-from utils.audio_processor import transcribe_audio
+from utils.cloud_stt import transcribe_audio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 import json
