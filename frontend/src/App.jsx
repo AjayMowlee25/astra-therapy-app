@@ -69,7 +69,8 @@ function App() {
     const connectWebSocket = () => {
       try {
         // Connect to the correct WebSocket endpoint
-        const socket = new WebSocket('ws://localhost:8000/ws');
+        const backendUrl = import.meta.env.VITE_WS_URL || 'wss://astra-backend-4phc.onrender.com/ws';
+        const socket = new WebSocket(backendUrl);
         websocketRef.current = socket;
 
         socket.onopen = () => {
