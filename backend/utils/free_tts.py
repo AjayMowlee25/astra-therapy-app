@@ -1,79 +1,48 @@
 # backend/utils/free_tts.py
-from TTS.api import TTS
-import numpy as np
-import soundfile as sf
-import tempfile
-import os
+import requests
 import logging
+import re
 
 logger = logging.getLogger(__name__)
 
-# Cache the TTS model
-_tts_model = None
-
-def get_tts_model():
+def text_to_speech(text: str) -> bytes:
     """
-    Initializes TTS model without license prompts.
-    """
-    global _tts_model
-    if _tts_model is None:
-        logger.info("Loading free TTS model...")
-        
-        # Use a model that doesn't require license acceptance
-        # These models are completely free and open source
-        model_options = [
-            "tts_models/en/ljspeech/tacotron2-DDC",  # Good quality
-            "tts_models/en/ljspeech/glow-tts",       # Very natural
-            "tts_models/en/vctk/vits",               # Multiple voices
-            "tts_models/en/ek1/tacotron2"           # Alternative
-        ]
-        
-        # Try models in order until one works
-        for model_name in model_options:
-            try:
-                _tts_model = TTS(model_name).to("cpu")
-                logger.info(f"Loaded TTS model: {model_name}")
-                break
-            except Exception as e:
-                logger.warning(f"Failed to load {model_name}: {e}")
-                continue
-        
-        if _tts_model is None:
-            raise Exception("Could not load any TTS model")
-            
-        logger.info("TTS model loaded successfully!")
-    return _tts_model
-
-def text_to_speech(text: str, voice: str = "default") -> bytes:
-    """
-    Converts text to speech with human-like quality.
+    Free TTS using Google's public TTS API.
+    Returns audio bytes (MP3 format).
     """
     try:
-        tts = get_tts_model()
+        # Clean and truncate text for URL safety
+        cleaned_text = re.sub(r'[^\w\s.,!?;-]', '', text)[:200]
         
-        logger.info(f"Generating speech: '{text}'")
-        
-        # Create temporary file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_file:
-            # Generate speech with natural parameters
-            tts.tts_to_file(
-                text=text,
-                file_path=tmp_file.name,
-                # Parameters for natural speech
-                speed=0.9,    # Slightly slower for more natural sound
-                emotion="neutral",
-            )
+        if not cleaned_text.strip():
+            return b""
             
-            # Read back as bytes
-            with open(tmp_file.name, "rb") as f:
-                wav_bytes = f.read()
+        logger.info(f"Generating free TTS for: '{cleaned_text}...'")
         
-        # Clean up
-        os.unlink(tmp_file.name)
+        # Use Google's free TTS API
+        response = requests.get(
+            "https://translate.google.com/translate_tts",
+            params={
+                'ie': 'UTF-8',
+                'q': cleaned_text,
+                'tl': 'en',  # English language
+                'client': 'tw-ob',  # Text-to-speech client
+                'total': '1',
+                'idx': '0'
+            },
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            },
+            timeout=10
+        )
         
-        logger.info(f"Generated audio: {len(wav_bytes)} bytes")
-        return wav_bytes
-        
+        if response.status_code == 200:
+            logger.info(f"Free TTS generated {len(response.content)} bytes")
+            return response.content
+        else:
+            logger.warning(f"Free TTS API failed with status: {response.status_code}")
+            return b""
+            
     except Exception as e:
-        logger.error(f"Error in TTS generation: {e}")
-        return b""
+        logger.error(f"Free TTS error: {e}")
+        return b""  # Silent fallback to avoid crashing
