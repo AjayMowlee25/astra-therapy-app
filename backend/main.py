@@ -30,7 +30,7 @@ try:
     
     try:
         from utils.groq_tts import text_to_speech
-        logger.info("cloud_tts imported successfully")
+        logger.info("groq_tts imported successfully")
     except Exception as e:
         logger.error(f"Failed to import cloud_tts: {e}")
         raise
