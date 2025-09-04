@@ -175,7 +175,7 @@ try:
             groq_test = get_ai_response("Hello, are you working?", [])
             
             # Test ElevenLabs TTS
-            from utils.cloud_tts import text_to_speech  
+            from utils.groq_tts import text_to_speech  
             tts_test = text_to_speech("Test message")
             
             return {
