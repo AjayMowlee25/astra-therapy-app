@@ -84,19 +84,11 @@ try:
             
             # Test if API keys are available immediately
             groq_key = os.getenv("GROQ_API_KEY")
-            elevenlabs_key = os.getenv("ELEVENLABS_API_KEY")
-            
+
             logger.info(f"GROQ_API_KEY available: {bool(groq_key)}")
-            logger.info(f"ELEVENLABS_API_KEY available: {bool(elevenlabs_key)}")
             
             if not groq_key:
                 error_msg = "ERROR: GROQ_API_KEY not set in environment variables"
-                logger.error(error_msg)
-                await websocket.send_text(error_msg)
-                return
-                
-            if not elevenlabs_key:
-                error_msg = "ERROR: ELEVENLABS_API_KEY not set in environment variables"
                 logger.error(error_msg)
                 await websocket.send_text(error_msg)
                 return
@@ -201,3 +193,7 @@ except Exception as e:
     logger.info("Waiting 5 minutes before exit to allow log viewing...")
     time.sleep(300)
     raise
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
